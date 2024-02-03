@@ -27,7 +27,7 @@ public class CustomPoducerCallbackPartitioner {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
         // 2.发送数据
         for (int i = 0; i < 5; i++) {
-            kafkaProducer.send(new ProducerRecord<>("first", "java" + i), ((metadata, exception) -> {
+            kafkaProducer.send(new ProducerRecord<>("first", 0, "",  "java " + i), ((metadata, exception) -> {
                 if (exception == null) {
                     System.out.println("主题：" + metadata.topic() + " 分区：" + metadata.partition());
                 }

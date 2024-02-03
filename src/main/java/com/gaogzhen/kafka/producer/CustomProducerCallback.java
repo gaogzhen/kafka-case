@@ -12,7 +12,7 @@ import java.util.Properties;
  * @createTime: 2024/01/27 10:32
  */
 public class CustomProducerCallback {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 1. 配置
         Properties properties = new Properties();
         // 1.1连接配置
@@ -23,12 +23,13 @@ public class CustomProducerCallback {
         // 1.创建生产者对象
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
         // 2.发送数据
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 50; i++) {
             kafkaProducer.send(new ProducerRecord<>("first", "zookeeper" + i), ((metadata, exception) -> {
                 if (exception == null) {
                     System.out.println("主题：" + metadata.topic() + " 分区：" + metadata.partition());
                 }
             }));
+            Thread.sleep(1);
         }
         // 3.关闭资源
         kafkaProducer.close();
